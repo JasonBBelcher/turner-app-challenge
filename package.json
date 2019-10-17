@@ -1,0 +1,16 @@
+{
+  "name": "turner-challenge",
+  "version": "1.0.0",
+  "description": "full stack coding challenge",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "crud",
+    "mean",
+    "titles"
+  ],
+  "author": "Jason Belcher",
+  "license": "MIT"
+}
