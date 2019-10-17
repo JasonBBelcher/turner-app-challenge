@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -9,6 +10,8 @@ const titles = require('./routes/titles');
 
 const app = express();
 app.use(cors());
+const morgan = require('morgan');
+app.use(morgan('dev'));
 
 
 app.use(bodyParser.json());
