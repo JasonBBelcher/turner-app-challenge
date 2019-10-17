@@ -2,4 +2,7 @@ const mongoose = require('mongoose');
 mongoose.set('debug', true);
 mongoose.Promise = Promise;
 
-mongoose.connect();
+mongoose.connect(process.env.MONGO_URI, (err) => {
+    console.error(err);
+
+});
