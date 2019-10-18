@@ -78,3 +78,5 @@ user@yourcomputer: ~/turner-challenge$ cd frontend/turner-app-challenge
 user@yourcomputer: ~/turner-challenge/frontend/turner-app-challenge$ npm i
 user@yourcomputer: ~/turner-challenge/frontend/turnere-app-challenge$ ng serve --open
 ```
+
+Note: I have included the .env file for convenience only. Usually this would not be checked into a repo
