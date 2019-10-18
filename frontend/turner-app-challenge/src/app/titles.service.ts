@@ -15,4 +15,8 @@ export class TitlesService {
   getTitles(query: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.URL}/?TitleName=${query}`);
   }
+
+  getTitleNames(): Promise<any[]> {
+    return this.http.get<any[]>(`${this.URL}/names`).toPromise();
+  }
 }
