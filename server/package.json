@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "start:dev": "nodemon ./bin/www"
+    "start": "PRODUCTION=true node ./bin/www",
+    "start:dev": "./node_modules/nodemon/bin/nodemon.js ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -14,5 +14,8 @@
     "express": "~4.13.1",
     "monk": "^7.1.1",
     "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
   }
 }
