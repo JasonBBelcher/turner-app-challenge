@@ -21,13 +21,13 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser())
 app.use('/api/v1/titles', titles);
 
-if (app.get('env') === 'production') {
-    var distDir = __dirname + '/dist/turner-app-challenge/';
-    app.use(express.static(distDir));
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(distDir));
-    });
-}
+
+var distDir = __dirname + '/dist/turner-app-challenge/';
+app.use(express.static(distDir));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(distDir));
+});
+
 
 
 
