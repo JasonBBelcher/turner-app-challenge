@@ -8,6 +8,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 import { FormsModule } from '@angular/forms';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,7 +18,8 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
     BrowserModule,
     BrowserAnimationsModule,
     AccordionModule.forRoot(),
-    TypeaheadModule.forRoot()
+    TypeaheadModule.forRoot(),
+    CollapseModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

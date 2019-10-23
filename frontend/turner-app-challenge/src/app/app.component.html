@@ -4,14 +4,13 @@
 
 <div class="container mb-3">
   <div class="row">
-
     <div class="search-box">
-
-      <input [(ngModel)]="selected" [typeahead]="titleNames" [isAnimated]="true" class="form-control"
-        placeholder="Search for a title by name">
+      <input [(ngModel)]="selected" [typeahead]="titleNames$" [isAnimated]="true" class="form-control"
+        placeholder="Search for a title by name" />
       <div class="mt-3">
-        <button (click)="getSearchTerm()" class="btn btn-default" type="submit">Search</button>
-
+        <button (click)="getSearchTerm()" class="btn btn-default" type="submit">
+          Search
+        </button>
       </div>
     </div>
 
@@ -20,30 +19,180 @@
 </div>
 <div class="container">
   <div class="row">
-    <div class="col-10 offset-1">
+    <div class="col-12 ">
       <accordion [isAnimated]="true">
-        <accordion-group [isOpen]="isOpen" *ngFor="
-        let title of titles$
-          | async
-
-        " heading="{{ title.TitleName}}  Release Year: {{title.ReleaseYear }}">
+        <accordion-group [isOpen]="isOpen" *ngFor="let title of titles$ | async"
+          heading="{{ title.TitleName }}  Release Year: {{ title.ReleaseYear }}">
           <div class="container-fluid">
             <div class="row">
               <div class="col-6">
+                <div>
+                  <button type="button" class="btn btn-default" (click)="isCollapsedAwards = !isCollapsedAwards"
+                    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+                    Awards
+                  </button>
+                  <hr />
+                  <div id="collapseBasic" [collapse]="isCollapsedAwards" [isAnimated]="true">
+                    <div class="well well-lg card card-block card-header">
+                      <table class="table">
+                        <thead>
+                          <tr>
+
+                            <th scope="col">Award</th>
+                            <th scope="col">AwardYear</th>
+                            <th scope="col">Award Company</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let award of title.Awards">
+                            <ng-container *ngIf="award.AwardWon">
+
+                              <td>{{award.Award}}</td>
+                              <td>{{award.AwardYear}}</td>
+                              <td>{{award.AwardCompany}}</td>
+                            </ng-container>
+                          </tr>
+
+                        </tbody>
+                      </table>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-6">
+
+                <button type="button" class="btn btn-default" (click)="isCollapsedGenres = !isCollapsedGenres"
+                  [attr.aria-expanded]="!isCollapsedGenres" aria-controls="collapseBasic">
+                  Genres
+                </button>
+                <hr />
+                <div id="collapseBasic" [collapse]="isCollapsedGenres" [isAnimated]="true">
+                  <div class="well well-lg card card-block card-header">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Genre</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let genre of title.Genres; let i = index">
+                          <ng-container *ngIf="genre.length">
+                            <th scope="row">{{i + 1}}</th>
+                            <td>{{genre}}</td>
+
+                          </ng-container>
+                        </tr>
+
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3 mb-3">
+              <div class="col-6">
+
+                <button type="button" class="btn btn-default" (click)="isCollapsedActors = !isCollapsedActors"
+                  [attr.aria-expanded]="!isCollapsedActors" aria-controls="collapseBasic">
+                  Actors
+                </button>
+                <hr />
+                <div id="collapseBasic" [collapse]="isCollapsedActors" [isAnimated]="true">
+                  <div class="well well-lg card card-block card-header">
+                    <table class="table">
+                      <thead>
+                        <tr>
+
+
+                          <th scope="col">Participant Type</th>
+                          <th scope="col">Name</th>
+
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let participant of title.Participants">
+                          <ng-container *ngIf="participant.RoleType == 'Actor' && participant.IsOnScreen">
+                            <td>{{participant.ParticipantType}}</td>
+                            <td>{{participant.Name}}</td>
+
+                          </ng-container>
+                        </tr>
+
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-6">
+
+                <button type="button" class="btn btn-default"
+                  (click)="isCollapsedParticipants = !isCollapsedParticipants"
+                  [attr.aria-expanded]="!isCollapsedParticipants" aria-controls="collapseBasic">
+                  Participants
+                </button>
+                <hr />
+                <div id="collapseBasic" [collapse]="isCollapsedParticipants" [isAnimated]="true">
+                  <div class="well well-lg card card-block card-header">
+                    <table class="table">
+                      <thead>
+                        <tr>
+
+
+                          <th scope="col">Role Type</th>
+                          <th scope="col">On Screen</th>
+                          <th scope="col">Participant Type</th>
+                          <th scope="col">Name</th>
+
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let participant of title.Participants">
+                          <ng-container *ngIf="participant.RoleType != 'Actor'">
+
+
+                            <td>{{participant.RoleType}}</td>
+                            <td>{{participant.IsOnScreen}}</td>
+                            <td>{{participant.ParticipantType}}</td>
+                            <td>{{participant.Name}}</td>
+
+                          </ng-container>
+                        </tr>
+
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <ul>
+                  <li *ngFor="let story of title.Storylines; let i = index">
+                    <ng-container *ngIf="story">
+                      <h4>Description {{i + 1}}</h4>
+                      <p>{{story.Description}}</p>
+
+                    </ng-container>
+                  </li>
+                </ul>
 
               </div>
             </div>
           </div>
 
         </accordion-group>
-
       </accordion>
-
     </div>
   </div>
-
-  <!-- <pre>{{awards$ | async | json}}</pre>
-  <pre>{{storylines$ | async | json}}</pre> -->
-  <pre>{{ storylines$ | async | json}}</pre>
-
 </div>
