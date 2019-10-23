@@ -68,17 +68,19 @@ export class TitlesService {
       this.titlesRepository.participants = data.map(title => {
         return { id: title._id, TitleName: title.TitleName, ReleaseYear: title.ReleaseYear, Participants: title.Participants };
       });
-
-      this.titlesRepository.titleNames = data.map(title => {
-        return title.TitleName;
-      })
+      if (!this.titlesRepository.titleNames.length) {
+        this.titlesRepository.titleNames = data.map(title => {
+          return title.TitleName;
+        })
+        // don't update the observable if it has already been cached to prevent weird behavior
+        this.titleNamesBSubject.next(Object.assign({}, this.titlesRepository).titleNames);
+      }
       /*
       *   -----------------------------------------------------------------------------------------------------------------
             Pass state to be observed from components
       
       */
 
-      this.titleNamesBSubject.next(Object.assign({}, this.titlesRepository).titleNames);
       this.titlesBSubject.next(Object.assign({}, this.titlesRepository).titles);
       this.awardsBSubject.next(Object.assign({}, this.titlesRepository).awards);
       this.storylinesBSubject.next(Object.assign({}, this.titlesRepository).storylines);
