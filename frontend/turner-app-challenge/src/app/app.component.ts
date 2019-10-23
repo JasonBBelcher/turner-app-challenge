@@ -31,9 +31,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.updateData();
-    this.api.getTitleNames().then((names) => {
-      this.titleNames = names;
-    });
   }
 
   updateData() {
