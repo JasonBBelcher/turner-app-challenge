@@ -11,11 +11,14 @@ import { IAwards } from './interfaces/awards.interface';
 })
 export class TitlesService {
   private URL: string;
-  titlesRepository: {titles: ITitle[], awards: IAwards[], genres: IGenres[], storylines: any[], participants: any[]};
+  // Repository for storing the state of the application
+  titlesRepository: {titles: ITitle[], awards: IAwards[], genres: IGenres[], storylines: IStoryline[], participants: IParticipant[]};
+  // publically available properties to be injected into component templates using the async pipe
   public titlesObs: Observable<any[]>;
   public awardsObs: Observable<any[]>;
   public storylinesObs: Observable<any[]>;
   public participantsObs: Observable<any[]>;
+// this mananges state updates and passes them along to observables above.
   private titlesBSubject: BehaviorSubject<any[]>;
   private awardsBSubject: BehaviorSubject<any[]>;
   private storylinesBSubject: BehaviorSubject<any[]>;
@@ -43,7 +46,13 @@ export class TitlesService {
   getTitlesAggregatted(query: string): void {
 
     this.http.get<any[]>(`${this.URL}/?TitleName=${query}`).subscribe((data: any) => {
+      // No transformation: just load the entire tree
       this.titlesRepository.titles = data;
+
+
+      /* Break up the Titles Object into manageable pieces to make loading into templates easier
+      * -------------------------------------------------------------------------------------------------------------
+      */
       this.titlesRepository.awards = data.map(title => {
         return {id: title._id, TitleName: title.TitleName, ReleaseYear: title.ReleaseYear, Awards: title.Awards };
       });
@@ -55,11 +64,17 @@ export class TitlesService {
       this.titlesRepository.participants = data.map(title => {
         return {id: title._id, TitleName: title.TitleName, ReleaseYear: title.ReleaseYear, Participants: title.Participants };
       });
+/*
+*   -----------------------------------------------------------------------------------------------------------------
+      Pass state to be observed from components
+
+*/
 
       this.titlesBSubject.next(Object.assign({}, this.titlesRepository).titles);
       this.awardsBSubject.next(Object.assign({}, this.titlesRepository).awards);
       this.storylinesBSubject.next(Object.assign({}, this.titlesRepository).storylines);
       this.participantsBSubject.next(Object.assign({}, this.titlesRepository).participants);
+
     });
   }
 
