@@ -30,43 +30,7 @@
           <div class="container-fluid">
             <div class="row">
               <div class="col-6">
-                <ul>
-                  <li *ngFor="let award of title.Awards">
-                    <ul>
-                      <h4>Award</h4>
-                      <li> {{award.AwardWon}}</li>
-                      <h4>Year</h4>
-                      <li> {{award.AwardYear}}</li>
-                      <h4>Award Type</h4>
-                      <li> {{award.Award}}</li>
-                      <h4>Award Company</h4>
-                      <li> {{award.AwardCompany}}</li>
-                    </ul>
-                    <ul>
-                      <h4>Participants</h4>
 
-                      <li *ngFor="let person of award.Participants">
-
-                        {{person}}
-
-                      </li>
-
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-6">
-                <ul>
-                  <li *ngFor="let storyline of title.Storylines">
-                    <h3>Description</h3>
-                    <p>{{storyline.Description}}</p>
-                    <h3>Language</h3>
-                    <p>{{storyline.Language}}</p>
-                    <h3>Type</h3>
-                    <p>{{storyline.Type}}</p>
-
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
@@ -77,5 +41,9 @@
 
     </div>
   </div>
+
+  <!-- <pre>{{awards$ | async | json}}</pre>
+  <pre>{{storylines$ | async | json}}</pre> -->
+  <pre>{{ storylines$ | async | json}}</pre>
 
 </div>
