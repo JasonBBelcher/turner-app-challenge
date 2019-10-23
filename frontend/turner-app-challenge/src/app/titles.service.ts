@@ -36,6 +36,7 @@ export class TitlesService {
     this.awardsBSubject = new BehaviorSubject([]);
     this.storylinesBSubject = new BehaviorSubject([]);
     this.participantsBSubject = new BehaviorSubject([]);
+    this.titleNamesObs = this.titleNamesBSubject.asObservable();
     this.titlesObs = this.titlesBSubject.asObservable();
     this.awardsObs = this.awardsBSubject.asObservable();
     this.storylinesObs = this.storylinesBSubject.asObservable();
@@ -77,7 +78,7 @@ export class TitlesService {
       
       */
 
-      this.titlesBSubject.next(Object.assign({}, this.titlesRepository).titleNames);
+      this.titleNamesBSubject.next(Object.assign({}, this.titlesRepository).titleNames);
       this.titlesBSubject.next(Object.assign({}, this.titlesRepository).titles);
       this.awardsBSubject.next(Object.assign({}, this.titlesRepository).awards);
       this.storylinesBSubject.next(Object.assign({}, this.titlesRepository).storylines);
