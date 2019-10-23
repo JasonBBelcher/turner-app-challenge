@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TitlesService } from './titles.service';
+import { IAwards } from './interfaces/awards.interface';
+import { ITitle } from './interfaces/title.interface';
 
 
 @Component({
@@ -9,12 +11,17 @@ import { TitlesService } from './titles.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  titles$: Observable<any[]>;
-  awards$: Observable<any[]>;
-  storylines$: Observable<any[]>;
-  participants$: Observable<any[]>;
+  titleNames$: Observable<string[]>
+  titles$: Observable<ITitle[]>;
+  awards$: Observable<IAwards[]>;
+  storylines$: Observable<IStoryline[]>;
+  participants$: Observable<IParticipant[]>;
   titleNames: string[];
   isOpen = false;
+  isCollapsedAwards = true;
+  isCollapsedGenres = true;
+  isCollapsedActors = true;
+  isCollapsedParticipants = true;
 
   selected: string;
 
@@ -35,6 +42,7 @@ export class AppComponent implements OnInit {
     this.awards$ = this.api.awardsObs;
     this.storylines$ = this.api.storylinesObs;
     this.participants$ = this.api.participantsObs;
+    this.titleNames$ = this.api.titleNamesObs;
   }
 
   getSearchTerm() {

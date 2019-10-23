@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpEvent } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import {ITitle} from './interfaces/title.interface';
+import { ITitle } from './interfaces/title.interface';
 import { IAwards } from './interfaces/awards.interface';
 
 
@@ -12,13 +12,15 @@ import { IAwards } from './interfaces/awards.interface';
 export class TitlesService {
   private URL: string;
   // Repository for storing the state of the application
-  titlesRepository: {titles: ITitle[], awards: IAwards[], genres: IGenres[], storylines: IStoryline[], participants: IParticipant[]};
+  titlesRepository: { titleNames: string[], titles: ITitle[], awards: IAwards[], genres: IGenres[], storylines: IStoryline[], participants: IParticipant[] };
   // publically available properties to be injected into component templates using the async pipe
   public titlesObs: Observable<any[]>;
+  public titleNamesObs: Observable<any[]>;
   public awardsObs: Observable<any[]>;
   public storylinesObs: Observable<any[]>;
   public participantsObs: Observable<any[]>;
-// this mananges state updates and passes them along to observables above.
+  // this mananges state updates and passes them along to observables above.
+  private titleNamesBSubject: BehaviorSubject<any[]>;
   private titlesBSubject: BehaviorSubject<any[]>;
   private awardsBSubject: BehaviorSubject<any[]>;
   private storylinesBSubject: BehaviorSubject<any[]>;
@@ -28,7 +30,8 @@ export class TitlesService {
 
   constructor(private http: HttpClient) {
     this.URL = `http://localhost:8080/api/v1/titles`;
-    this.titlesRepository = {titles: [], awards: [], genres: [], storylines: [], participants: []};
+    this.titlesRepository = { titleNames: [], titles: [], awards: [], genres: [], storylines: [], participants: [] };
+    this.titleNamesBSubject = new BehaviorSubject([]);
     this.titlesBSubject = new BehaviorSubject([]);
     this.awardsBSubject = new BehaviorSubject([]);
     this.storylinesBSubject = new BehaviorSubject([]);
@@ -54,22 +57,27 @@ export class TitlesService {
       * -------------------------------------------------------------------------------------------------------------
       */
       this.titlesRepository.awards = data.map(title => {
-        return {id: title._id, TitleName: title.TitleName, ReleaseYear: title.ReleaseYear, Awards: title.Awards };
+        return { id: title._id, TitleName: title.TitleName, ReleaseYear: title.ReleaseYear, Awards: title.Awards };
       });
 
       this.titlesRepository.storylines = data.map(title => {
-        return {id: title._id, TitleName: title.TitleName, ReleaseYear: title.ReleaseYear, storylines: title.Storylines };
+        return { id: title._id, TitleName: title.TitleName, ReleaseYear: title.ReleaseYear, storylines: title.Storylines };
       });
 
       this.titlesRepository.participants = data.map(title => {
-        return {id: title._id, TitleName: title.TitleName, ReleaseYear: title.ReleaseYear, Participants: title.Participants };
+        return { id: title._id, TitleName: title.TitleName, ReleaseYear: title.ReleaseYear, Participants: title.Participants };
       });
-/*
-*   -----------------------------------------------------------------------------------------------------------------
-      Pass state to be observed from components
 
-*/
+      this.titlesRepository.titleNames = data.map(title => {
+        return title.TitleName;
+      })
+      /*
+      *   -----------------------------------------------------------------------------------------------------------------
+            Pass state to be observed from components
+      
+      */
 
+      this.titlesBSubject.next(Object.assign({}, this.titlesRepository).titleNames);
       this.titlesBSubject.next(Object.assign({}, this.titlesRepository).titles);
       this.awardsBSubject.next(Object.assign({}, this.titlesRepository).awards);
       this.storylinesBSubject.next(Object.assign({}, this.titlesRepository).storylines);
@@ -78,7 +86,4 @@ export class TitlesService {
     });
   }
 
-  getTitleNames(): Promise<any[]> {
-    return this.http.get<any[]>(`${this.URL}/names`).toPromise();
-  }
 }
