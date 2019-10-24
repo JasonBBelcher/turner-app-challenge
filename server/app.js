@@ -22,7 +22,7 @@ app.use(cookieParser())
 app.use('/api/v1/titles', titles);
 
 
-var distDir = __dirname + '/dist/turner-app-challenge/';
+var distDir = __dirname + '/dist/';
 app.use(express.static(distDir));
 app.get('*', (req, res) => {
     res.sendFile(path.join(distDir));
