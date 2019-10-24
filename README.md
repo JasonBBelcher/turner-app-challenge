@@ -14,14 +14,13 @@ I generally approach projects from the bottom of the stack up. The mongo databas
 in the cloud for me. Given this, I didn't have to define any models and therefore went with a simple
 library called monk to help me make queries to it instead of mongoose.
 
-#### Two GET routes are defined.
+#### Two GET route is defined.
 
 1. /api/v1/titles
    This route pulls the entire collection of objects needed to populate the application.
    If a query is given like this: `[someresource]/?TitleName=` or `[someresource]/?ReleaseYear` a record matching
    that name will be pulled or if nothing is found it will return everything.
-2. /api/v1/titles/names  
-   This route pulls the entire collection of strings representing all the title names available.
+
 
 ### Front End Description
 
@@ -80,3 +79,16 @@ user@yourcomputer: ~/turner-challenge/frontend/turnere-app-challenge$ ng serve -
 ```
 
 Note: I have included the .env file for convenience only. Usually this would not be checked into a repo
+
+
+# UI Improvements from Merged Branch
+
+![screen 1](./screenshots/screen1.png)
+![screen 2](./screenshots/screen2.png)
+![screen 3](./screenshots/screen3.png)
+![screen 4](./screenshots/screen4.png)
+![screen 5](./screenshots/screen5.png)
+![screen 6](./screenshots/screen6.png)
+
+
+
