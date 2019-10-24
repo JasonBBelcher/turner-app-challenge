@@ -17,3 +17,20 @@ li {
 .search-box {
   margin: 0 auto;
 }
+
+input {
+  padding: 0 6px;
+}
+
+.sort-btn {
+  padding: 0 1vw 0px 0;
+  margin: 0 4px 0 0;
+}
+
+.search-btn {
+  text-align: center;
+  padding: 0 100px;
+
+}
+
+

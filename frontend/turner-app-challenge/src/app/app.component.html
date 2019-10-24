@@ -5,13 +5,24 @@
 <div class="container mb-3">
   <div class="row">
     <div class="search-box">
-      <input [(ngModel)]="selected" [typeahead]="titleNames$" [isAnimated]="true" class="form-control"
-        placeholder="Search for a title by name" />
+      <div class="btn-group mb-3" dropdown>
+        <button id="button-animated" dropdownToggle type="button" class="btn btn-default sort-btn dropdown-toggle"
+          aria-controls="dropdown-animated">
+          Sort<span class="caret"></span>
+        </button>
+        <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
+          <li role="menuitem" (click)="getSortByValue('a-z')">A-Z</li>
+          <li role="menuitem" (click)="getSortByValue('z-a')">Z-A</li>
+        </ul>
+        <input [(ngModel)]="selected" [typeahead]="titleNames" [isAnimated]="true" class="form-control"
+          placeholder="Search for a title by name" />
+      </div>
       <div class="mt-3">
-        <button (click)="getSearchTerm()" class="btn btn-default" type="submit">
+        <button (click)="getSearchTerm()" class="btn btn-default search-btn" type="submit">
           Search
         </button>
       </div>
+
     </div>
 
     <br />
@@ -21,14 +32,17 @@
   <div class="row">
     <div class="col-12 ">
       <accordion [isAnimated]="true">
-        <accordion-group [isOpen]="isOpen" *ngFor="let title of titles$ | async"
-          heading="{{ title.TitleName }}  Release Year: {{ title.ReleaseYear }}">
+        <accordion-group [isOpen]="isOpen" *ngFor="let title of titles$ | sort:sortByValue | async">
+          <button class="btn btn-link btn-block clearfix" accordion-heading type="button">
+            <div class="pull-left float-left">{{title.TitleName}}</div>
+            <span class="badge badge-secondary float-right pull-right">{{title.ReleaseYear}}</span>
+          </button>
           <div class="container-fluid">
             <div class="row">
               <div class="col-6">
                 <div>
                   <button type="button" class="btn btn-default" (click)="isCollapsedAwards = !isCollapsedAwards"
-                    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+                    [attr.aria-expanded]="!isCollapsedAwards" aria-controls="collapseBasic">
                     Awards
                   </button>
                   <hr />
@@ -144,24 +158,14 @@
                     <table class="table">
                       <thead>
                         <tr>
-
-
                           <th scope="col">Role Type</th>
-                          <th scope="col">On Screen</th>
-                          <th scope="col">Participant Type</th>
                           <th scope="col">Name</th>
-
-
                         </tr>
                       </thead>
                       <tbody>
                         <tr *ngFor="let participant of title.Participants">
                           <ng-container *ngIf="participant.RoleType != 'Actor'">
-
-
                             <td>{{participant.RoleType}}</td>
-                            <td>{{participant.IsOnScreen}}</td>
-                            <td>{{participant.ParticipantType}}</td>
                             <td>{{participant.Name}}</td>
 
                           </ng-container>
