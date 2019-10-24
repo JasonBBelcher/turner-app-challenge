@@ -120,6 +120,8 @@ ngx-bootstrap/component-loader
 
 ngx-bootstrap/datepicker
 
+ngx-bootstrap/dropdown
+
 ngx-bootstrap/positioning
 
 ngx-bootstrap/typeahead
